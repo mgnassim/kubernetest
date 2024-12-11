@@ -67,25 +67,16 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Install Google Cloud CLI and gke-gcloud-auth-plugin
+      - name: Install Google Cloud CLI
         run: |
           curl -sSL https://sdk.cloud.google.com | bash
           exec -l $SHELL
-          # Install the gke-gcloud-auth-plugin
-          gcloud components install gke-gcloud-auth-plugin
 
-      - name: Add Google Cloud SDK GPG Key
-        run: |
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo tee /etc/apt/trusted.gpg.d/google.asc
-
-      - name: Add Google Cloud SDK repository
-        run: |
-          echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list
-          curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-
-      - name: Get GKE credentials
-        run: |
-          gcloud container clusters get-credentials autopilot-cluster-1 --zone us-central1
+      - name: Get GKE credentials (v2)
+        uses: google-github-actions/get-gke-credentials@v2
+        with:
+          cluster_name: autopilot-cluster-1
+          location: us-central1
 
       - name: Set Kubernetes namespace (optional)
         run: |
