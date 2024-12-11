@@ -17,6 +17,8 @@ spec:
         app: python-guestbook
         tier: frontend
     spec:
+      imagePullSecrets:
+        - name: my-registry-secret
       containers:
         - name: frontend
           image: gcr.io/canariokubernetestest/python-guestbook-frontend:latest

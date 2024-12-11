@@ -17,6 +17,8 @@ spec:
         app: python-guestbook
         tier: backend
     spec:
+      imagePullSecrets:
+        - name: my-registry-secret
       initContainers:
         - name: init-db-ready
           image: mongo:4
