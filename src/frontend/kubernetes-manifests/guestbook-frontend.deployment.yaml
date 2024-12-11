@@ -21,7 +21,7 @@ spec:
         - name: my-registry-secret # Ensure imagePullSecrets is here
       containers:
         - name: frontend
-          image: gcr.io/canariokubernetestest/python-guestbook-frontend:latest # Using latest tag
+          image: gcr.io/canariokubernetestest/python-guestbook-frontend:$IMAGE_TAG # Use dynamic tag
           imagePullPolicy: Always # Always pull the latest image
           ports:
             - name: http-server
