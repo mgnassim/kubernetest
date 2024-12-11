@@ -67,10 +67,12 @@ jobs:
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      - name: Install Google Cloud CLI
+      - name: Install Google Cloud CLI and gke-gcloud-auth-plugin
         run: |
           curl -sSL https://sdk.cloud.google.com | bash
           exec -l $SHELL
+          # Install the gke-gcloud-auth-plugin
+          gcloud components install gke-gcloud-auth-plugin
 
       - name: Add Google Cloud SDK GPG Key
         run: |
