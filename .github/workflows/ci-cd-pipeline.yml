@@ -72,7 +72,6 @@ jobs:
         sudo apt-get update
         sudo apt-get install google-cloud-cli-gke-gcloud-auth-plugin
 
-
       - name: Get GKE credentials
         run: |
           gcloud container clusters get-credentials autopilot-cluster-1 --zone us-central1
