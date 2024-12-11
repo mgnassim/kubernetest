@@ -26,11 +26,11 @@ jobs:
 
       - name: Build Backend Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/flask-backend ./src/backend
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/python-guestbook-backend ./src/backend
 
       - name: Push Backend Docker Image
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/flask-backend
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/python-guestbook-backend
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -49,11 +49,11 @@ jobs:
 
       - name: Build Frontend Docker Image
         run: |
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/flask-frontend ./src/frontend
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/python-guestbook-frontend ./src/frontend
 
       - name: Push Frontend Docker Image
         run: |
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/flask-frontend
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/python-guestbook-frontend
 
   deploy:
     runs-on: ubuntu-latest
@@ -72,7 +72,7 @@ jobs:
           curl -sSL https://sdk.cloud.google.com | bash
           exec -l $SHELL
 
-      - name: Get GKE credentials (v2)
+      - name: Get GKE credentials
         uses: google-github-actions/get-gke-credentials@v2
         with:
           cluster_name: autopilot-cluster-1
@@ -90,7 +90,10 @@ jobs:
         run: |
           kubectl apply -f ./src/frontend/kubernetes-manifests
 
-      - name: Wait for Deployment
+      - name: Wait for Backend Deployment
         run: |
-          kubectl rollout status deployment/flask-backend
-          kubectl rollout status deployment/flask-frontend
+          kubectl rollout status deployment/python-guestbook-backend
+
+      - name: Wait for Frontend Deployment
+        run: |
+          kubectl rollout status deployment/python-guestbook-frontend
