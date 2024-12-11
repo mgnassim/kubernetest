@@ -29,6 +29,7 @@ spec:
       containers:
         - name: backend
           image: gcr.io/canariokubernetestest/python-guestbook-backend:latest
+          imagePullPolicy: Always # Always pull the latest image
           ports:
             - name: http-server
               containerPort: 8080
