@@ -69,7 +69,7 @@ jobs:
 
       - name: Get GKE credentials
         run: |
-          gcloud container clusters get-credentials flask-cluster --zone us-central1-a
+          gcloud container clusters get-credentials autopilot-cluster-1 --zone us-central1-a
 
       - name: Set Kubernetes namespace (optional)
         run: |
