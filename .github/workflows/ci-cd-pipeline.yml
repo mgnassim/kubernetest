@@ -82,17 +82,25 @@ jobs:
         run: |
           kubectl config set-context --current --namespace=default
 
+      - name: Deploy MongoDB to GKE
+        run: |
+          kubectl apply -f ./src/backend/kubernetes-manifests/guestbook-mongodb.deployment.yaml
+
+      - name: Wait for MongoDB Deployment
+        run: |
+          kubectl rollout status deployment/python-guestbook-mongodb
+
       - name: Deploy Backend to GKE
         run: |
           kubectl apply -f ./src/backend/kubernetes-manifests
 
-      - name: Deploy Frontend to GKE
-        run: |
-          kubectl apply -f ./src/frontend/kubernetes-manifests
-
       - name: Wait for Backend Deployment
         run: |
           kubectl rollout status deployment/python-guestbook-backend
+
+      - name: Deploy Frontend to GKE
+        run: |
+          kubectl apply -f ./src/frontend/kubernetes-manifests
 
       - name: Wait for Frontend Deployment
         run: |

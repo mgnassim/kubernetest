@@ -18,13 +18,13 @@ spec:
         tier: frontend
     spec:
       containers:
-      - name: frontend
-        image: python-guestbook-frontend
-        ports:
-        - name: http-server
-          containerPort: 8080
-        env:
-        - name: PORT
-          value: "8080"
-        - name: GUESTBOOK_API_ADDR
-          value: python-guestbook-backend:8080
+        - name: frontend
+          image: gcr.io/canariokubernetestest/python-guestbook-frontend:latest
+          ports:
+            - name: http-server
+              containerPort: 8080
+          env:
+            - name: PORT
+              value: "8080"
+            - name: GUESTBOOK_API_ADDR
+              value: python-guestbook-backend:8080
